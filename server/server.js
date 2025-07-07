@@ -31,7 +31,7 @@ app.use(limiter)
 app.use(
   cors({
     origin: [
-      "https://productivity-hub-alpha.vercel.app/",
+      "https://productivity-hub-alpha.vercel.app",
       "http://localhost:5173"
     ],
     credentials: true,
