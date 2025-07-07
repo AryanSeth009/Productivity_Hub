@@ -30,10 +30,10 @@ app.use(limiter)
 // CORS configuration
 app.use(
   cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? ["https://your-frontend-domain.com"]
-        : ["http://localhost:5173", "http://localhost:3000"],
+    origin: [
+      "https://productivity-hub-alpha.vercel.app/",
+      "http://localhost:5173"
+    ],
     credentials: true,
   }),
 )
