@@ -5,18 +5,27 @@ import { motion, AnimatePresence } from "framer-motion"
 import axios from "axios"
 import toast from "react-hot-toast"
 import { Plus, Search, Filter, MoreHorizontal, Check, Calendar, Trash2, Edit3, X, Save } from "lucide-react"
+import { useAuth } from "../context/AuthContext"
 
-function Todos() {
+function Todos({ triggerNewTask, onTaskTriggered, inputRef }) {
   const [todos, setTodos] = useState([])
   const [text, setText] = useState("")
   const [editingId, setEditingId] = useState(null)
   const [loading, setLoading] = useState(false)
   const [filter, setFilter] = useState("all")
   const [searchTerm, setSearchTerm] = useState("")
+  const { user } = useAuth()
 
   useEffect(() => {
     fetchTodos()
   }, [])
+
+  useEffect(() => {
+    if (triggerNewTask && inputRef && inputRef.current) {
+      inputRef.current.focus()
+      if (onTaskTriggered) onTaskTriggered()
+    }
+  }, [triggerNewTask, inputRef])
 
   const fetchTodos = async () => {
     try {
@@ -201,6 +210,7 @@ function Todos() {
                 }
               }}
               className="input"
+              ref={inputRef}
             />
           </div>
           {editingId ? (
@@ -280,12 +290,10 @@ function Todos() {
                     </div>
                     <div className="col-span-2">
                       <div className="flex items-center gap-2">
-                        <div
-                          className={`w-6 h-6 ${assignee.color} rounded-full flex items-center justify-center text-xs font-medium text-white`}
-                        >
-                          {assignee.avatar}
+                        <div className="w-6 h-6 bg-notion-accent rounded-full flex items-center justify-center text-xs font-medium text-white uppercase">
+                          {user?.name ? user.name[0] : "?"}
                         </div>
-                        <span className="text-sm text-notion-text-secondary">{assignee.name}</span>
+                        <span className="text-sm text-notion-text-secondary">{user?.name || "User"}</span>
                       </div>
                     </div>
                     <div className="col-span-2">

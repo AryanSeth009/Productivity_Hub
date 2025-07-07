@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { motion } from "framer-motion"
 import { useAuth } from "../context/AuthContext"
 import {
@@ -24,6 +24,9 @@ function Dashboard() {
   const { user, logout } = useAuth()
   const [activeTab, setActiveTab] = useState("notes")
   const [showUserMenu, setShowUserMenu] = useState(false)
+  const [triggerNewNote, setTriggerNewNote] = useState(false)
+  const [triggerNewTask, setTriggerNewTask] = useState(false)
+  const todosInputRef = useRef(null)
 
   const sidebarItems = [
     { id: "home", label: "Home", icon: Home, active: false },
@@ -33,6 +36,14 @@ function Dashboard() {
     // { id: "archive", label: "Archive", icon: Archive, active: false },
     // { id: "trash", label: "Trash", icon: Trash2, active: false },
   ]
+
+  // Handler for Quick Actions
+  const handleQuickNewNote = () => setTriggerNewNote(true)
+  const handleQuickNewTask = () => setTriggerNewTask(true)
+
+  // Reset triggers after Notes/Todos handle them
+  const handleNoteCreated = () => setTriggerNewNote(false)
+  const handleTaskTriggered = () => setTriggerNewTask(false)
 
   return (
     <div className="h-screen flex bg-white">
@@ -46,8 +57,8 @@ function Dashboard() {
         {/* Sidebar Header */}
         <div className="p-4 border-b border-notion-border">
           <div className="flex items-center gap-2 mb-4">
-            <div className="w-8 h-8 bg-notion-accent rounded-lg flex items-center justify-center">
-              <Zap className="w-4 h-4 text-white" />
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center">
+              <img src="/logo.png" alt="logo" className="w-6 h-6" />
             </div>
             <span className="font-semibold text-notion-text">Productivity Hub</span>
           </div>
@@ -88,11 +99,11 @@ function Dashboard() {
               Quick Actions
             </div>
             <div className="mt-2 space-y-1">
-              <button className="sidebar-item w-full">
+              <button className="sidebar-item w-full" onClick={handleQuickNewNote}>
                 <Plus className="h-4 w-4" />
                 <span>New Note</span>
               </button>
-              <button className="sidebar-item w-full">
+              <button className="sidebar-item w-full" onClick={handleQuickNewTask}>
                 <Plus className="h-4 w-4" />
                 <span>New Task</span>
               </button>
@@ -162,8 +173,8 @@ function Dashboard() {
           transition={{ duration: 0.3 }}
           className="page-content"
         >
-          {activeTab === "notes" && <Notes />}
-          {activeTab === "todos" && <Todos />}
+          {activeTab === "notes" && <Notes triggerNewNote={triggerNewNote} onNoteCreated={handleNoteCreated} />}
+          {activeTab === "todos" && <Todos triggerNewTask={triggerNewTask} onTaskTriggered={handleTaskTriggered} inputRef={todosInputRef} />}
         </motion.div>
       </div>
     </div>

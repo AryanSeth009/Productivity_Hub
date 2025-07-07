@@ -37,8 +37,7 @@ function Login() {
       >
         <div className="text-center">
           <div className="flex items-center justify-center">
-          <img src={URL='./logo.png'} alt="logo" className="w-10 h-10" />
-
+            <img src="/logo.png" alt="logo" className="w-10 h-10" />
           </div>
           <h2 className="text-3xl font-bold text-notion-text">Welcome back</h2>
           <p className="mt-2 text-notion-text-secondary">Sign in to your workspace</p>

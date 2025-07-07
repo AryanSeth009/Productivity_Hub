@@ -38,7 +38,7 @@ function Register() {
       >
         <div className="text-center">
         <div className="flex items-center justify-center">
-          <img src={URL='./logo.png'} alt="logo" className="w-10 h-10" />
+          <img src="/logo.png" alt="logo" className="w-10 h-10" />
 
           </div>  
           <h2 className="text-3xl font-bold text-notion-text">Create your workspace</h2>

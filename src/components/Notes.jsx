@@ -19,7 +19,7 @@ import {
   SortAsc,
 } from "lucide-react"
 
-function Notes() {
+function Notes({ triggerNewNote, onNoteCreated }) {
   const [notes, setNotes] = useState([])
   const [selectedNote, setSelectedNote] = useState(null)
   const [isEditing, setIsEditing] = useState(false)
@@ -31,6 +31,13 @@ function Notes() {
   useEffect(() => {
     fetchNotes()
   }, [])
+
+  useEffect(() => {
+    if (triggerNewNote) {
+      handleCreateNote()
+      if (onNoteCreated) onNoteCreated()
+    }
+  }, [triggerNewNote])
 
   const fetchNotes = async () => {
     try {
