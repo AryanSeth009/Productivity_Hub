@@ -7,6 +7,8 @@ import toast from "react-hot-toast"
 import { Plus, Search, Filter, MoreHorizontal, Check, Calendar, Trash2, Edit3, X, Save } from "lucide-react"
 import { useAuth } from "../context/AuthContext"
 
+axios.defaults.baseURL = import.meta.env.VITE_API_URL
+
 function Todos({ triggerNewTask, onTaskTriggered, inputRef }) {
   const [todos, setTodos] = useState([])
   const [text, setText] = useState("")

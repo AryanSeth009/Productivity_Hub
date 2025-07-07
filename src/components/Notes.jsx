@@ -19,6 +19,8 @@ import {
   SortAsc,
 } from "lucide-react"
 
+axios.defaults.baseURL = import.meta.env.VITE_API_URL
+
 function Notes({ triggerNewNote, onNoteCreated }) {
   const [notes, setNotes] = useState([])
   const [selectedNote, setSelectedNote] = useState(null)
